@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ThemeContext, LocaleContext } from './context';
 import Row from './Row';
 
@@ -7,6 +7,26 @@ import Row from './Row';
 //   state = {
 //     name: 'Mary',
 //     surname: 'Poppins',
+//     width: window.innerWidth,
+//   };
+
+//   componentDidMount() {
+//     document.title = `${this.state.name} ${this.state.surname}`;
+//     window.addEventListener('resize', this.handleResize);
+//   }
+
+//   componentDidUpdate() {
+//     document.title = `${this.state.name} ${this.state.surname}`;
+//   }
+
+//   componentWillUnmount() {
+//     window.removeEventListener('resize', this.handleResize);
+//   }
+
+//   handleResize = () => {
+//     this.setState({
+//       width: window.innerWidth,
+//     });
 //   };
 
 //   handleNameChange = e => {
@@ -41,8 +61,9 @@ import Row from './Row';
 //               />
 //             </Row>
 //             <LocaleContext.Consumer>
-//               {locale => <Row label="Locale">{locale}</Row>}
+//               {locale => <Row label="Language">{locale}</Row>}
 //             </LocaleContext.Consumer>
+//             <Row label="Width">{this.state.width}</Row>
 //           </section>
 //         )}
 //       </ThemeContext.Consumer>
@@ -56,6 +77,21 @@ const Greeting = () => {
   const [surname, setSurname] = useState('Poppins');
   const theme = useContext(ThemeContext);
   const locale = useContext(LocaleContext);
+
+  useEffect(() => {
+    document.title = `${name} ${surname}`;
+  });
+
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    // setWidth(window.innerWidth); // ! Don't use this...
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
 
   const handleNameChange = e => {
     setName(e.target.value);
@@ -74,6 +110,7 @@ const Greeting = () => {
         <input type="text" value={surname} onChange={handleSurnameChange} />
       </Row>
       <Row label="Language">{locale}</Row>
+      <Row label="Width">{width}</Row>
     </section>
   );
 };

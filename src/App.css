@@ -12,6 +12,10 @@ section {
   padding: 10px;
 }
 
+section.dark {
+  background: #ffc600;
+}
+
 .row {
   display: flex;
   flex-direction: column;
@@ -20,7 +24,7 @@ section {
 
 label {
   font-size: 16px;
-  color: #333;
+  color: #333333;
   padding: 0 5px;
 }
 
@@ -31,6 +35,10 @@ input {
   outline: 0;
   padding: 10px 5px;
   border-radius: 5px;
+}
+
+.dark input {
+  background: #ffc600;
 }
 
 input:focus {
